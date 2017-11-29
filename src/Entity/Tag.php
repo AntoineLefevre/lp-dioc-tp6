@@ -61,6 +61,10 @@ class Tag
     }
 
     // Uniquement des getter et un constructeur
+    function __toString()
+    {
+        return $this->name;
+    }
 
 
 }

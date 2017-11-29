@@ -7,11 +7,18 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class ArticleFetcher
 {
-    public function fetch() : array
+    public function __construct(Registry $doctrine)
     {
-        // Retourne les 10 derniers articles.
-        // La limit (ici 10) doit provenir d'une variable d'env.
-
-        return [];
+        $this->doctrine = $doctrine;
+    }
+    public function fetch()
+    {
+        $articles = $this->doctrine->getManager()->getRepository(Article::class)->findAll();
+        return $articles;
+    }
+    public function fetchBySlug($slug)
+    {
+        $articles = $this->doctrine->getManager()->getRepository(Article::class)->findOneBy(['slug'=>$slug]);
+        return $articles;
     }
 }

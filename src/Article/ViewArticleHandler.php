@@ -8,9 +8,19 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class ViewArticleHandler
 {
+    public function __construct(Registry $doctrine, CountViewUpdater $counter, ArticleStatsLogger $articleLog)
+    {
+        $this->articleLog = $articleLog;
+        $this->em = $doctrine->getManager();
+        $this->counter = $counter;
+    }
     public function handle(Article $article)
     {
-        // Appel le service de mise à jour de vue d'un article.
-        // Log également un article stat avec pour action view.
+        $article = $this->counter->update($article);
+
+        $this->em->persist($article);
+        $this->em->flush();
+
+        $this->articleLog->log($article, ArticleStat::VIEW);
     }
 }

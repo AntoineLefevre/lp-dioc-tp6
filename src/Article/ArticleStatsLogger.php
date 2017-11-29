@@ -10,8 +10,18 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class ArticleStatsLogger
 {
-    public function log(Article $article, string $action): void
+    public function __construct(Registry $doctrine, CountViewUpdater $counter, TokenStorage $token, RequestStack $request)
     {
-        // Créer un article stat et le persist.
+        $this->user = $token->getToken()->getUser();
+        $this->em = $doctrine->getManager();
+        $this->counter = $counter;
+        $this->clientIp = $request->getCurrentRequest()->getClientIp();
+    }
+
+    public function log($article, $action)
+    {
+        $articleStat = new ArticleStat($action, $article, new \DateTime(), $this->clientIp, $this->user);
+        $this->em->persist($articleStat);
+        $this->em->flush();
     }
 }

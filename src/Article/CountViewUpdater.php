@@ -7,8 +7,15 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class CountViewUpdater
 {
-    public function update(Article $article): void
+    public function __construct(TokenStorage $token)
     {
-        // Incremente le compteur de vue, sauf si l'utilisareur courant est également l'auteur de l'article.
+        $this->user = $token->getToken()->getUser();
+    }
+    public function update(Article $article)
+    {
+        if($article->getAuthor() != $this->user){
+            $article->setCountView($article->getCountView()+1);
+        }
+        return $article;
     }
 }

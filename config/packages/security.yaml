@@ -12,6 +12,7 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER]
+        ROLE_AUTHOR: [ROLE_USER]
 
     firewalls:
         dev:
@@ -28,4 +29,9 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/stats/, roles: ROLE_AUTHOR }
+        - { path: ^/article/new, roles: ROLE_AUTHOR }
+        - { path: ^/article/update, roles: ROLE_AUTHOR }
         - { path: ^/, roles: ROLE_USER }
+
+

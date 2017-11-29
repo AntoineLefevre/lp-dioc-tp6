@@ -46,7 +46,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var boolean
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="boolean")
      */
     private $isAuthor = false;
 
@@ -206,6 +206,14 @@ class User implements UserInterface, \Serializable
     public function setArticles($articles)
     {
         $this->articles = $articles;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
     }
 
 }

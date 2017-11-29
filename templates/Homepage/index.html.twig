@@ -2,6 +2,8 @@
 
 {% block body %}
     <ul>
-        <li><a href="#">Titre de l'article - 5</a></li>
+        {% for unArt in articles %}
+        <li><a href="{{ path('article_show', {'slug': unArt.slug}) }}">{{ unArt.title }}- {{ unArt.countView }}</a></li>
+        {% endfor %}
     </ul>
 {% endblock %}

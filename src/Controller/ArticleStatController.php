@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\ArticleStat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,5 +19,6 @@ class ArticleStatController extends Controller
     public function showAction()
     {
         // Seul les auteurs doivent avoir access.
+
     }
 }
